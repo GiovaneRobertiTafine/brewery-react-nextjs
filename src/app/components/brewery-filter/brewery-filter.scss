@@ -1,0 +1,45 @@
+.box-pagination {
+    display: flex;
+    gap: 10px;
+
+    @media (max-width: 760px) {
+        flex-direction: column;
+    }
+}
+
+.pagination {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+
+    .button-pagination {
+        border: 1px solid #e0e0e0;
+        color: #373737;
+        background-color: #fff;
+        width: 30px;
+        height: 30px;
+        border-radius: 2.5px;
+        cursor: pointer;
+
+        &.current-page {
+            background-color: #373737;
+            color: #fff;
+            cursor: inherit;
+        }
+
+        &.disabled {
+            color: #ccc;
+            cursor: inherit;
+        }
+
+        &.dot {
+            cursor: initial;
+        }
+    }
+
+    @media (max-width: 760px) {
+        gap: 0px;
+        justify-content: initial !important;
+        flex-wrap: wrap;
+    }
+}

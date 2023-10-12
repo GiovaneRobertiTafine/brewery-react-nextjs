@@ -1,0 +1,13 @@
+.box-detail {
+    width: 80%;
+
+    @media (max-width: 1366px) {
+        width: 85%;
+    }
+}
+
+#link-back {
+    text-decoration: none;
+    font-weight: 700;
+    color: #373737;
+}
