@@ -3,18 +3,17 @@
 import { Type } from "@/app/enums/type.enum";
 import { BreweryFilter } from "@/app/interfaces/brewery-filter.interface";
 import { Brewery } from "@/app/models/brewery.model";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import "./brewery-list-without-reload.scss";
 
 export function BrewerylistWithoutReload(
     { totalPerType }: BreweryFilter) {
-
     const [breweryList, setBreweryList] = useState<Brewery[]>([]);
-    const [typeBrewery, setTypeBrewery] = useState<string | null>(null);
+    const [typeBrewery, setTypeBrewery] = useState<string>(localStorage.getItem('type') ?? '');
     const types: string[] = Object.keys(Type).filter(key => isNaN(Number(key)));
     const [quantityPages, setQuantityPages] = useState<(number | string)[]>([]);
-    const [currentPage, setCurrentPage] = useState<number>(1);
+    const [currentPage, setCurrentPage] = useState<number>((+localStorage.getItem('page')!) ?? 1);
     const router = useRouter();
 
     async function getBreweryList() {
@@ -47,6 +46,7 @@ export function BrewerylistWithoutReload(
         setQuantityPages([]);
         verifyPage();
         getBreweryList();
+        console.log(typeBrewery, currentPage);
         localStorage.setItem('type', typeBrewery ?? '');
         localStorage.setItem('page', currentPage.toString());
     }, [typeBrewery, currentPage]);
@@ -93,8 +93,8 @@ export function BrewerylistWithoutReload(
             <div className="box-pagination">
                 <div>
                     <label>Type:</label>
-                    <select name="type" id="select-type" onChange={(e) => { setTypeBrewery(() => e.target.value); setCurrentPage(() => 1); }}>
-                        <option value={''} defaultValue={''}>Todos</option>
+                    <select name="type" id="select-type" value={typeBrewery} onChange={(e) => { setTypeBrewery(() => e.target.value); setCurrentPage(() => 1); }}>
+                        <option value={''}>Todos</option>
                         {
                             types.map((r) => <option key={r} value={r}>{r.toLocaleLowerCase()}</option>)
                         }
