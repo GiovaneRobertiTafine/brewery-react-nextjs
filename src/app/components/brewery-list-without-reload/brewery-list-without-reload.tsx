@@ -7,13 +7,21 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import "./brewery-list-without-reload.scss";
 
+let typeLocal = "";
+let pageLocal = 1;
+
+if (typeof window !== 'undefined') {
+    typeLocal = localStorage.getItem('type')!;
+    pageLocal = !(+localStorage.getItem('page')!) ? 1 : +localStorage.getItem('page')!;
+}
+
 export function BrewerylistWithoutReload(
     { totalPerType }: BreweryFilter) {
     const [breweryList, setBreweryList] = useState<Brewery[]>([]);
-    const [typeBrewery, setTypeBrewery] = useState<string>(localStorage.getItem('type') ?? '');
+    const [typeBrewery, setTypeBrewery] = useState<string>(typeLocal ?? '');
     const types: string[] = Object.keys(Type).filter(key => isNaN(Number(key)));
     const [quantityPages, setQuantityPages] = useState<(number | string)[]>([]);
-    const [currentPage, setCurrentPage] = useState<number>((+localStorage.getItem('page')!) ?? 1);
+    const [currentPage, setCurrentPage] = useState<number>(pageLocal);
     const router = useRouter();
 
     async function getBreweryList() {
