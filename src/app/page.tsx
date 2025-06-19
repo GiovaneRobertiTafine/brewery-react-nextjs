@@ -11,7 +11,7 @@ import { BreweryList } from './interfaces/brewery-list.interface';
 import { Brewery } from './models/brewery.model';
 import { BreweryFilter } from './interfaces/brewery-filter.interface';
 
-async function getMeta(type?: keyof typeof Type | string) {
+async function getMeta(type?: keyof typeof Type) {
     const res = await fetch('https://api.openbrewerydb.org/v1/breweries/meta' +
         (type ? '?by_type=' + type.toLocaleLowerCase() : ''), { next: { revalidate: 3600 } });
     // The return value is *not* serialized
@@ -28,7 +28,7 @@ async function getMeta(type?: keyof typeof Type | string) {
 }
 
 async function getBreweryList(type: string, page: string) {
-    const res = await fetch('https://api.openbrewerydb.org/v1/breweries?page=' + page + '&per_page=20' +
+    const res = await fetch('https://api.openbrewerydb.org/v1/breweries?page=' + page + '&per_page=40' +
         (type ? '&by_type=' + type.toLocaleLowerCase() : ''));
     // The return value is *not* serialized
     // You can return Date, Map, Set, etc.
@@ -50,16 +50,16 @@ export default async function Home({
 
     const meta: BreweryFilter = {
         totalPerType: {
-            BAR: (await getMeta(Type[Type.BAR])).total,
-            BREWPUB: (await getMeta(Type[Type.BREWPUB])).total,
-            CLOSED: (await getMeta(Type[Type.CLOSED])).total,
-            CONTRACT: (await getMeta(Type[Type.CONTRACT])).total,
-            LARGE: (await getMeta(Type[Type.LARGE])).total,
-            MICRO: (await getMeta(Type[Type.MICRO])).total,
-            NANO: (await getMeta(Type[Type.NANO])).total,
-            PLANNING: (await getMeta(Type[Type.PLANNING])).total,
-            PROPRIETOR: (await getMeta(Type[Type.PROPRIETOR])).total,
-            REGIONAL: (await getMeta(Type[Type.REGIONAL])).total,
+            BAR: (await getMeta('BAR')).total,
+            BREWPUB: (await getMeta('BREWPUB')).total,
+            CLOSED: (await getMeta('CLOSED')).total,
+            CONTRACT: (await getMeta('CONTRACT')).total,
+            LARGE: (await getMeta('LARGE')).total,
+            MICRO: (await getMeta('MICRO')).total,
+            NANO: (await getMeta('NANO')).total,
+            PLANNING: (await getMeta('PLANNING')).total,
+            PROPRIETOR: (await getMeta('PROPRIETOR')).total,
+            REGIONAL: (await getMeta('REGIONAL')).total,
             TODOS: (await getMeta()).total
         }
 

@@ -49,11 +49,13 @@ export function BreweryFilterComponent(
                         }
 
         }
-        if (isStart) list.push(...['...', totalPages]);
-        if (isEnd) list.unshift(...[1, '...']);
-        if (isMiddle) {
-            list.push(...['...', totalPages]);
-            list.unshift(...[1, '...']);
+        if (totalPages > 7) {
+            if (isStart) list.push(...['...', totalPages]);
+            if (isEnd) list.unshift(...[1, '...']);
+            if (isMiddle) {
+                list.push(...['...', totalPages]);
+                list.unshift(...[1, '...']);
+            }
         }
         return list;
     };
