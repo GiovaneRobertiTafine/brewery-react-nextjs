@@ -68,6 +68,8 @@ export function BreweryFilterComponent(
     const router = useRouter();
 
     const handlerChangeFilter = (filter: Filter) => {
+        if (+filter.page < 1 || +filter.page > Math.ceil(+(totalPerType[typeBrewery as keyof typeof Type]) / 40))
+            return;
         let query = '?' + (filter.type ? 'type=' + filter.type + '&' : '');
         console.log(filter);
         localStorage.setItem('type', filter.type ?? '');
