@@ -68,7 +68,7 @@ export function BreweryFilterComponent(
     const router = useRouter();
 
     const handlerChangeFilter = (filter: Filter) => {
-        if (+filter.page < 1 || +filter.page > Math.ceil(+(totalPerType[typeBrewery as keyof typeof Type]) / 40))
+        if (+filter.page < 1 || +filter.page > Math.ceil(+(totalPerType[(typeBrewery || 'TODOS') as keyof typeof Type]) / 40))
             return;
         let query = '?' + (filter.type ? 'type=' + filter.type + '&' : '');
         console.log(filter);
@@ -111,7 +111,7 @@ export function BreweryFilterComponent(
                 }
 
                 <button className={"button-pagination " +
-                    (currentPage === Math.ceil(+(totalPerType[typeBrewery as keyof typeof Type]) / 40) ? 'disabled' : '')}
+                    (currentPage === Math.ceil(+(totalPerType[(typeBrewery || 'TODOS') as keyof typeof Type]) / 40) ? 'disabled' : '')}
                     onClick={() => handlerChangeFilter({ type: typeBrewery!, page: (currentPage + 1).toString() })}> &gt; </button>
             </div>
 
